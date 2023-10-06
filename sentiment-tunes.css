@@ -11,7 +11,8 @@
 body {
     background-color: #1ed760;
     font-family: 'gotham', sans-serif;
-    margin: 20px;
+    font-size: 16px;
+    /* margin: 20px; */
     margin-top: 80px;
     text-align: center;
 }
@@ -19,6 +20,12 @@ body {
 h1 {
     font-weight: bold;
     text-align: center;
+}
+
+.main-header{
+    background-image:url("../sentiment-tunes/vinyl.jpg");
+    background-position:center;
+    height: 300px;
 }
 
 .intro {

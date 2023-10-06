@@ -8,35 +8,48 @@
 </head>
 
 <body>
+
     <!-- introduction -->
-    <h1>Welcome to Sentiment Tunes!</h1>
-    <p class="intro">Sentiment Tunes leverages data mining and sentiment analysis techniques to curate a personalised playlist for you based on your current emotional state.</p>
+    <header id="main-header">
+        <div class="container">
+            <h1>Welcome to Sentiment Tunes!</h1>
+            <p class="intro">Sentiment Tunes leverages data mining and sentiment analysis techniques to curate a personalised playlist for you based on your current emotional state.</p>
+            <br><br><br>
+        </div>
+    </header>
 
-    <br><br><br>
+    <!-- get users input -->
+    <section id="questions">
+        <form>
 
-    <form>
-        <!-- ask users for sentence, to be linked to sentiment analysis -->
-        <p class="input">
-            In a sentence, how are you feeling today?<br>
-            <input type="text" name="text" id="text" placeholder="Write it here!">
-        </p>
-        <br><br>
+            <!-- ask users for sentence, to be linked to sentiment analysis -->
+            <div class="input">
+                In a sentence, how are you feeling today?<br>
+                <input type="text" name="text" id="text" placeholder="Write it here!">
+            </div>
+            <br><br>
+    
+            <!-- ask users for similar playlist -->
+            <div class="input">
+                If there is a public Spotify playlist that reflects your current mood, <br>paste the link here!<br>
+                <input type="text" name="link" id="text" placeholder="Drop the link!">
+            </div>
+            <br><br>
+    
+            <!-- submit button, to be linked to RS -->
+            <div>
+                <input type="submit" value="Let's go!">
+            </div>
 
-        <!-- ask users for similar playlist -->
-        <p class="input">
-            If there is a public Spotify playlist that reflects your current mood, <br>paste the link here!<br>
-            <input type="text" name="link" id="text" placeholder="Drop the link!">
-        </p>
-        <br><br>
-
-        <!-- submit button, to be linked to RS -->
-        <p>
-            <input type="submit" value="Let's go!">
-        </p>
-
-    </form>
+        </form>
+    </section> 
+    
     
     <!-- after users receive their curated playlist, direct them to the google forms, link: https://forms.gle/G5FBiw47rtjzj3eg8 -->
+
+    <footer id="main-footer">
+        <p>Copyright &copy; SMU SCIS IS424 G1T3</p>
+    </footer>
 
 </body>
 </html>
