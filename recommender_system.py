@@ -210,6 +210,7 @@ practice_playlist = main_df[(main_df['artist_name'] == 'Post Malone') &  (main_d
 
 single_vector, nonplaylist_features = generate_playlist_feature(feature_df, practice_playlist)
 reccomendation = generate_playlist_recos(main_df, single_vector, nonplaylist_features, 10)
+print(reccomendation)
 
 # printing reccommendation should work
 # will update this code another day

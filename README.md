@@ -3,7 +3,7 @@
 ## Install
 
 ```shell script
-pip install streamlit
+pip install -r requirements.txt
 ```
 
 ## Running 

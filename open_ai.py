@@ -1,6 +1,6 @@
 import openai
-import json
 import os
+import json
 import pandas as pd
 
 from dotenv import load_dotenv
@@ -48,7 +48,7 @@ def generate_mood_suggestion(input_text, model="gpt-3.5-turbo-16k"):
     for mood in possible_moods:
         if mood in suggested_mood:
             moods.append(mood)
-    print(moods)
+    return moods
 
 def string_to_json(text: str):
     text = text.replace("`", "")
@@ -56,4 +56,4 @@ def string_to_json(text: str):
     return json.loads(text)
 
 if __name__ == "__main__":
-    generate_mood_suggestion("I'm tired")
+    print(generate_mood_suggestion("I got f grade for my exammmm"))
