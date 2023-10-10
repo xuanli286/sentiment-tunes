@@ -1,4 +1,5 @@
 openai==0.28.0
 pandas==2.1.0
+scikit-learn
 streamlit==1.27.2
 spotipy==2.23.0

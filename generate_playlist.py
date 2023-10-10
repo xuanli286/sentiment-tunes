@@ -1,4 +1,3 @@
-# IMPORT STATEMENTS
 import pandas as pd
 import numpy as np
 import sklearn
@@ -11,10 +10,8 @@ from sklearn.cluster import KMeans
 from sklearn import metrics
 from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.spatial.distance import cdist
-import matplotlib.pyplot as plt
 
-# USEFUL FUNCTIONS
- 
+# useful functions
 
 def clean_fake_lists(df,col, quotation_mark):
     """
@@ -187,30 +184,35 @@ def generate_playlist_recos(df, vectorized_playlist, nonplaylist_features, top_s
     
     return recommendations
 
-main_df = pd.read_csv('Datasets/jessica_ver.csv')
+# main function
 
-# scaling columns
-to_scale = ['Popularity', 'key', 'loudness', 'tempo', 'duration_ms', 'time_signature']
+def generate_playlist(playlist, emotion='yes', number_of_recommendations=10):
+    """
+    Generate a playlist using a reference playlist.
+    ---
+    Input:
+    playlist, array: ID of reference playlist
+    emotion, string: whether to use emotion dataset or not, defaults to yes
+    number_of_recommendations, integer: number of songs to recommend, defaults to 10
+    ---
+    Output:
+    recommendation, array: track id of all recommended songs
+    """
 
-# normalize to_scale columns
-prep_df = scale_columns(main_df, to_scale)
+    # decide which master playlist to use
+    # might need to update, too big to update to github
+    if emotion == 'yes':
+        main_df = pd.read_csv('recommendation_dataset/emotions_reco_dataset.csv')
+        feature_df = pd.read_csv('recommendation_dataset/emotions_reco_features.csv')
+    else:
+        main_df = pd.read_csv('recommendation_dataset/600k_reco_dataset.csv')
+        feature_df = pd.read_csv('recommendation_dataset/600k_reco_features.csv')
+    
+    # retrieve reference playlist information
+    reference_playlist = main_df[main_df['track_id'].isin(playlist) ]
 
-# tf-idf the genre
-tfidf_df = tf_idf_transform(prep_df, 'genre')
+    # produce recommendation
+    representative_vector, nonplaylist_features = generate_playlist_feature(feature_df, reference_playlist)
+    recommendation = generate_playlist_recos(main_df, representative_vector, nonplaylist_features, number_of_recommendations)
 
-feature_of_interest = ['track_id', 'danceability', 'energy', 'mode', 'speechiness',
-       'acousticness', 'instrumentalness', 'liveness', 'valence',
-       'Popularity_norm', 'key_norm',
-       'loudness_norm',  'tempo_norm', 
-       'duration_ms_norm', 'time_signature_norm']
-feature_df = pd.concat([prep_df[feature_of_interest],tfidf_df], axis=1)
-
-# top songs from Posty Bae
-practice_playlist = main_df[(main_df['artist_name'] == 'Post Malone') &  (main_df['Popularity'] > 85)]
-
-single_vector, nonplaylist_features = generate_playlist_feature(feature_df, practice_playlist)
-reccomendation = generate_playlist_recos(main_df, single_vector, nonplaylist_features, 10)
-print(reccomendation)
-
-# printing reccommendation should work
-# will update this code another day
+    return recommendation['track_id'].values
