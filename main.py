@@ -18,8 +18,13 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id, clie
 st.set_page_config(page_title="Sentiment Tunes", page_icon='https://cdn3.emoji.gg/emojis/SpotifyLogo.png')
 
 st.write("""
-# generate your personalised album!
+# Welcome to Sentiment Tunes!
 """)
+st.write("")
+st.write("Our mission is simple: to curate a personalised playlist just for you, based on your current emotional state.")
+st.write("Whether you're ecstatic, introspective, or somewhere in between, we've got a song for every emotion. We leverage data mining and sentiment analysis techniques to discover songs that match your feelings.")
+
+st.write("Let's get started!")
 
 query_params = st.experimental_get_query_params()
 if 'code' in query_params:
@@ -41,8 +46,8 @@ if 'code' in query_params:
         st.experimental_rerun()
 
     with st.form('user_form'):
-        sentence_input = st.text_input("how was your day?")
-        reference_playlist_url = st.text_input("paste your favourite Spotify playlist url here!")
+        sentence_input = st.text_input("In a sentence, tell us how you're feeling, so we can find the perfect tunes to match your mood.")
+        reference_playlist_url = st.text_input("If you have a favourite Spotify playlist that is public, share it with us!")
         submit_button = st.form_submit_button(label="Generate Playlist")
     if submit_button:
         if sentence_input:
@@ -57,7 +62,7 @@ if 'code' in query_params:
                 track_id_list = generate_playlist(playlist_data)
             else:
                 track_id_list = generate_playlist(playlist_data, emotion='no')
-            playlist_title = f'Recommended Playlist'
+            playlist_title = f'Sentiment Tunes\' recommended playlist'
             playlist = sp.user_playlist_create(user_info['id'], playlist_title, public=True)
             playlist_id = playlist['id']
             for track_id in track_id_list:
