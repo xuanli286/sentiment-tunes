@@ -6,7 +6,7 @@ import webbrowser
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyOAuth
 from open_ai import generate_mood_suggestion
-from retrieve_reference_playlist import *
+from retrieve_reference_playlist import get_track_ids
 from generate_playlist import *
 
 load_dotenv()
@@ -57,7 +57,7 @@ if 'code' in query_params:
         if reference_playlist_url:
             idx = reference_playlist_url.find("?")
             spotify_playlist_id = reference_playlist_url[34:idx]
-            playlist_data = get_track_ids(spotify_playlist_id, access_token)
+            playlist_data = get_track_ids(spotify_playlist_id, token_info['access_token'])
             if is_mood:
                 track_id_list = generate_playlist(playlist_data)
             else:
