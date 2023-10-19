@@ -92,16 +92,16 @@ def get_track_features(track_id_list: list, access_token: str):
 
 
 
+if __name__ == "__main__":
+    # get user input
+    reference_playlist_url = 'https://open.spotify.com/playlist/4VhOeTuLzUqmcOSp5SsyiQ?si=865f716de78d47c5' #to change this value
+    idx = reference_playlist_url.find("?")
+    playlist_id_input = (reference_playlist_url[34:idx])
 
-# get user input
-reference_playlist_url = 'https://open.spotify.com/playlist/4VhOeTuLzUqmcOSp5SsyiQ?si=865f716de78d47c5' #to change this value
-idx = reference_playlist_url.find("?")
-playlist_id_input = (reference_playlist_url[34:idx])
+    # calling get_track_id to obtain reference playlist
+    playlist_data = get_track_ids(playlist_id_input, access_token)
+    if playlist_data:
+        # Process the retrieved playlist data as needed
+        print(playlist_data)
 
-# calling get_track_id to obtain reference playlist
-playlist_data = get_track_ids(playlist_id_input, access_token)
-if playlist_data:
-    # Process the retrieved playlist data as needed
-    print(playlist_data)
-
-get_track_features(playlist_data, access_token)
+    get_track_features(playlist_data, access_token)
