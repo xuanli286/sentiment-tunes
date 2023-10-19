@@ -59,8 +59,9 @@ def get_track_ids(playlist_id, access_token):
 
     track_id_arr = []
 
-    for n in retrieve_data['items']:
-        track_id_arr.append(n['track']['id'])
+    if 'items' in retrieve_data.keys(): 
+        for n in retrieve_data['items']:
+            track_id_arr.append(n['track']['id'])
 
     return track_id_arr
 
