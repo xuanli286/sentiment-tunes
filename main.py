@@ -11,10 +11,10 @@ from generate_playlist import *
 
 load_dotenv()
 
-spotify_client_id = os.getenv("SPOTIFY_CLIENT_ID")
-spotify_client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
+spotify_client_id = st.secrets("SPOTIFY_CLIENT_ID")
+spotify_client_secret = st.secrets("SPOTIFY_CLIENT_SECRET")
 # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id, client_secret=spotify_client_secret, redirect_uri='http://localhost:8501/', scope='playlist-modify-public playlist-modify-private'))
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id, client_secret=spotify_client_secret, redirect_uri='https://sentiment-tunes.vercel.app/', scope='playlist-modify-public playlist-modify-private'))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id, client_secret=spotify_client_secret, redirect_uri='https://sentiment-tunes-is424.streamlit.app/', scope='playlist-modify-public playlist-modify-private'))
 
 st.set_page_config(page_title="Sentiment Tunes", page_icon='https://cdn3.emoji.gg/emojis/SpotifyLogo.png')
 
