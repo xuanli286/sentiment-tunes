@@ -14,12 +14,26 @@ Download the respective datasets (too big to upload to GitHub) from google drive
 Things to change in "generate_playlist.py" :
 
 1. For emotions -- line 205 :
-'''
 change the routing to the emotions dataset @Jess @Steph
 '''
-2. For main dataset -- line 208 :
+main_df = pd.read_csv('recommendation_dataset/emotions_reco_dataset.csv')
+feature_df = pd.read_csv('recommendation_dataset/emotions_reco_features.csv')
+
+to 
+
+
 '''
+
+2. For main dataset -- line 208 :
 change the routing from the 600K sets to the 200K sets
+'''
+main_df = pd.read_csv('recommendation_dataset/600k_reco_dataset.csv')
+feature_df = pd.read_csv('recommendation_dataset/600k_reco_features.csv')
+
+to 
+
+main_df = pd.read_csv('recommendation_dataset/200K_dataset.csv')
+feature_df = pd.read_csv('recommendation_dataset/200k_features.csv')
 '''
 
 ## Running 
