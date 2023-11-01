@@ -202,8 +202,8 @@ def generate_playlist(playlist, emotion='yes', number_of_recommendations=10):
     # decide which master playlist to use
     # might need to update, too big to update to github
     if emotion == 'yes':
-        main_df = pd.read_csv('recommendation_dataset/emotions_reco_dataset.csv')
-        feature_df = pd.read_csv('recommendation_dataset/emotions_reco_features.csv')
+        main_df = pd.read_csv('recommendation_dataset/10k_dataset.csv')
+        feature_df = pd.read_csv('recommendation_dataset/10k_features_with_genre.csv')
     else:
         main_df = pd.read_csv('recommendation_dataset/600k_reco_dataset.csv')
         feature_df = pd.read_csv('recommendation_dataset/600k_reco_features.csv')
