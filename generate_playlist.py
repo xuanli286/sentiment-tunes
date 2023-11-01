@@ -203,10 +203,12 @@ def generate_playlist(playlist, emotion='yes', number_of_recommendations=10):
     # might need to update, too big to update to github
     if emotion == 'yes':
         main_df = pd.read_csv('recommendation_dataset/10k_dataset.csv')
+        main_df = main_df.rename(columns={'id': 'track_id'})
         feature_df = pd.read_csv('recommendation_dataset/10k_features_with_genre.csv')
+        feature_df = feature_df.rename(columns={'id_x': 'track_id'})
     else:
-        main_df = pd.read_csv('recommendation_dataset/600k_reco_dataset.csv')
-        feature_df = pd.read_csv('recommendation_dataset/600k_reco_features.csv')
+        main_df = pd.read_csv('recommendation_dataset/200k_dataset.csv')
+        feature_df = pd.read_csv('recommendation_dataset/200k_features.csv')
     
     # retrieve reference playlist information
     reference_playlist = main_df[main_df['track_id'].isin(playlist) ]

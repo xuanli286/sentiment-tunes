@@ -6,7 +6,7 @@ import webbrowser
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyOAuth
 from open_ai import generate_mood_suggestion
-from retrieve_reference_playlist import get_track_ids
+from retrieve_reference_playlist import get_track_ids, get_track_ids_mood
 from generate_playlist import *
 
 load_dotenv()
@@ -33,7 +33,6 @@ if 'code' in query_params:
     token_info = sp.auth_manager.get_access_token(code)
     sp = spotipy.Spotify(auth=token_info['access_token'])
     user_info = sp.me()
-    is_mood = False
 
     if (len(user_info['images']) > 0):
         user_img = user_info['images'][0]
@@ -51,11 +50,13 @@ if 'code' in query_params:
         reference_playlist_url = st.text_input("If you have a favourite Spotify playlist that is public, share it with us!")
         submit_button = st.form_submit_button(label="Generate Playlist")
     if submit_button:
-        if sentence_input:
+        is_mood = False
+        if len(sentence_input) > 0:
             suggested_mood = generate_mood_suggestion(sentence_input)
             st.write(f"Suggested Mood: {suggested_mood}")
             is_mood = True
-        if reference_playlist_url:
+        
+        if len(reference_playlist_url) > 0:
             idx = reference_playlist_url.find("?")
             spotify_playlist_id = reference_playlist_url[34:idx]
             playlist_data = get_track_ids(spotify_playlist_id, token_info['access_token'])
@@ -63,21 +64,25 @@ if 'code' in query_params:
                 track_id_list = generate_playlist(playlist_data)
             else:
                 track_id_list = generate_playlist(playlist_data, emotion='no')
-            playlist_title = f'Sentiment Tunes\' recommended playlist'
-            playlist = sp.user_playlist_create(user_info['id'], playlist_title, public=True)
-            playlist_id = playlist['id']
-            for track_id in track_id_list:
-                sp.playlist_add_items(playlist_id, [track_id])
-            cover_img = sp.playlist(playlist_id)["images"][0]["url"]
-            st.markdown(f"""
-                            <a href="https://open.spotify.com/playlist/{playlist_id}" target="_blank">
-                                <figure>
-                                    <img src="{cover_img}" width="200">
-                                    <figcaption>{playlist_title}</figcaption>
-                                </figure>
-                            </a>
-                        """, unsafe_allow_html=True)
-    
+        else:
+            if is_mood:
+                mood_playlist_data = get_track_ids_mood(suggested_mood, token_info['access_token'])
+                track_id_list = generate_playlist(mood_playlist_data)
+        playlist_title = f'Sentiment Tunes\' recommended playlist'
+        playlist = sp.user_playlist_create(user_info['id'], playlist_title, public=True)
+        playlist_id = playlist['id']
+        for track_id in track_id_list:
+            sp.playlist_add_items(playlist_id, [track_id])
+        cover_img = sp.playlist(playlist_id)["images"][0]["url"]
+        st.markdown(f"""
+                        <a href="https://open.spotify.com/playlist/{playlist_id}" target="_blank">
+                            <figure>
+                                <img src="{cover_img}" width="200">
+                                <figcaption>{playlist_title}</figcaption>
+                            </figure>
+                        </a>
+                    """, unsafe_allow_html=True)
+
 else:
     if st.button("Login with Spotify"):
         st.write("Redirecting to Spotify login page...")
