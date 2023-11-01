@@ -14,7 +14,6 @@ load_dotenv()
 spotify_client_id = os.getenv("SPOTIFY_CLIENT_ID")
 spotify_client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id, client_secret=spotify_client_secret, redirect_uri='http://localhost:8501/', scope='playlist-modify-public playlist-modify-private'))
-# sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=spotify_client_id, client_secret=spotify_client_secret, redirect_uri='https://sentiment-tunes.streamlit.app/', scope='playlist-modify-public playlist-modify-private'))
 
 st.set_page_config(page_title="Sentiment Tunes", page_icon='https://cdn3.emoji.gg/emojis/SpotifyLogo.png')
 
@@ -59,14 +58,14 @@ if 'code' in query_params:
         if len(reference_playlist_url) > 0:
             idx = reference_playlist_url.find("?")
             spotify_playlist_id = reference_playlist_url[34:idx]
-            playlist_data = get_track_ids(spotify_playlist_id, token_info['access_token'])
+            playlist_data = get_track_ids(spotify_playlist_id)
             if is_mood:
                 track_id_list = generate_playlist(playlist_data)
             else:
                 track_id_list = generate_playlist(playlist_data, emotion='no')
         else:
             if is_mood:
-                mood_playlist_data = get_track_ids_mood(suggested_mood, token_info['access_token'])
+                mood_playlist_data = get_track_ids_mood(suggested_mood)
                 track_id_list = generate_playlist(mood_playlist_data)
         playlist_title = f'Sentiment Tunes\' recommended playlist'
         playlist = sp.user_playlist_create(user_info['id'], playlist_title, public=True)

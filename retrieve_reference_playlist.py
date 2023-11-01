@@ -51,11 +51,10 @@ def get_data(url: str, access_token: str, verbose: bool = False):
 
 # FUNCTION: to get a list of track ids from a playlist
 # this would be the reference playlist
-def get_track_ids(playlist_id, access_token):
+def get_track_ids(playlist_id, access_token=access_token):
     # Spotify API endpoint
     url = "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id)
     retrieve_data = get_data(url, access_token)
-
     track_id_arr = []
 
     if 'items' in retrieve_data.keys(): 
@@ -66,7 +65,7 @@ def get_track_ids(playlist_id, access_token):
 
 
 # Retreive track ids of default playlist based on user's input mood
-def get_track_ids_mood(mood, access_token):
+def get_track_ids_mood(mood, access_token=access_token):
     mood_data = pd.read_csv(f"default_playlist_dataset/{mood}.csv")
     default_playlist_df = pd.DataFrame(mood_data)
     track_ids_mood = default_playlist_df['id'].tolist()
@@ -90,7 +89,6 @@ def get_track_features(track_id_list: list, access_token: str):
     track_features_df.drop(columns=['type', 'uri', 'track_href', 'analysis_url'], inplace=True)
     track_features_df.rename(columns={'id':'track_id'}, inplace=True)
 
-    print(track_features_df)
     return track_features_df
 
 
