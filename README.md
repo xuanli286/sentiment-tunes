@@ -17,3 +17,6 @@ streamlit run main.py
 
 ## Reference
 https://docs.streamlit.io/library/cheatsheet
+
+## .env
+Please download our .env file in our submission folder
