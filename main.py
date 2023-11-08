@@ -59,10 +59,7 @@ if 'code' in query_params:
             idx = reference_playlist_url.find("?")
             spotify_playlist_id = reference_playlist_url[34:idx]
             playlist_data = get_track_ids(spotify_playlist_id)
-            if is_mood:
-                track_id_list = generate_playlist(playlist_data)
-            else:
-                track_id_list = generate_playlist(playlist_data, emotion='no')
+            track_id_list = generate_playlist(playlist_data, emotion='no')
         else:
             if is_mood:
                 mood_playlist_data = get_track_ids_mood(suggested_mood)
